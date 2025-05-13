@@ -1,17 +1,14 @@
 {
     "AuthUrlScheme": "mmauth://",
     "AuthUrlSchemeDev": "mmauthbeta://",
-    "DefaultServerUrl": "",
-    "DefaultServerName": "",
-    "TestServerUrl": "http://localhost:8065",
-    "AutoSelectServerUrl": false,
-
+    "DefaultServerUrl": "https://chat.therapyboard.com.au",
+    "TestServerUrl": "https://chat.therapyboard.com.au",
+    "AutoSelectServerUrl": true,    
+    "DefaultServerName": "therapyboard",
     "WebsiteURL": "https://mattermost.com",
     "ServerNoticeURL": "https://github.com/mattermost/mattermost-server/blob/master/NOTICE.txt",
     "MobileNoticeURL": "https://github.com/mattermost/mattermost-mobile/blob/master/NOTICE.txt",
-
     "RudderApiKey": "",
-
     "SentryEnabled": false,
     "SentryDsnIos": "",
     "SentryDsnAndroid": "",
@@ -23,10 +20,8 @@
         },
         "severityLevelFilter": ["fatal"]
     },
-
     "ShowReview": false,
     "ShowOnboarding": false,
-
     "ExperimentalNormalizeMarkdownLinks": false,
     "CustomRequestHeaders": {},
     "CollectNetworkMetrics": false
