@@ -136,6 +136,7 @@ class NetworkManagerSingleton {
                 timeoutIntervalForResource: managedConfig?.timeoutVPN ? parseInt(managedConfig.timeoutVPN, 10) : this.DEFAULT_CONFIG.sessionConfiguration?.timeoutIntervalForResource,
                 waitsForConnectivity: managedConfig?.useVPN === 'true',
                 collectMetrics: LocalConfig.CollectNetworkMetrics,
+
             },
             headers,
         };

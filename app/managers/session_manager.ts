@@ -5,7 +5,7 @@ import CookieManager, {type Cookie} from '@react-native-cookies/cookies';
 import {Image} from 'expo-image';
 import {AppState, type AppStateStatus, DeviceEventEmitter, Platform} from 'react-native';
 
-import {removePushDisabledInServerAcknowledged, storeOnboardingViewedValue} from '@actions/app/global';
+import {removePushDisabledInServerAcknowledged} from '@actions/app/global';
 import {cancelSessionNotification, logout, scheduleSessionNotification} from '@actions/remote/session';
 import {Events, Launch} from '@constants';
 import DatabaseManager from '@database/manager';
@@ -16,7 +16,7 @@ import PushNotifications from '@init/push_notifications';
 import NetworkManager from '@managers/network_manager';
 import SecurityManager from '@managers/security_manager';
 import WebsocketManager from '@managers/websocket_manager';
-import {getAllServers, getServerDisplayName} from '@queries/app/servers';
+import {getServerDisplayName} from '@queries/app/servers';
 import {getCurrentUser} from '@queries/servers/user';
 import {getThemeFromState} from '@screens/navigation';
 import EphemeralStore from '@store/ephemeral_store';
@@ -24,8 +24,6 @@ import {deleteFileCache, deleteFileCacheByDir} from '@utils/file';
 import {isMainActivity} from '@utils/helpers';
 import {urlSafeBase64Encode} from '@utils/security';
 import {addNewServer} from '@utils/server';
-
-import type {LaunchType} from '@typings/launch';
 
 type LogoutCallbackArg = {
     serverUrl: string;
@@ -163,27 +161,15 @@ export class SessionManagerSingleton {
         const activeServerUrl = await DatabaseManager.getActiveServerUrl();
         const activeServerDisplayName = await DatabaseManager.getActiveServerDisplayName();
         await this.terminateSession(serverUrl, removeServer);
+        EphemeralStore.theme = undefined;
 
-        if (activeServerUrl === serverUrl) {
-            let displayName = '';
-            let launchType: LaunchType = Launch.AddServer;
-            if (!Object.keys(DatabaseManager.serverDatabases).length) {
-                EphemeralStore.theme = undefined;
-                launchType = Launch.Normal;
+        // Relaunch the app with the fixed server
+        relaunchApp({
+            launchType: Launch.Normal,
+            serverUrl: activeServerUrl,
+            displayName: activeServerDisplayName,
+        });
 
-                if (activeServerDisplayName) {
-                    displayName = activeServerDisplayName;
-                }
-            }
-
-            // set the onboardingViewed value to false so the launch will show the onboarding screen after all servers were removed
-            const servers = await getAllServers();
-            if (!servers.length) {
-                await storeOnboardingViewedValue(false);
-            }
-
-            relaunchApp({launchType, serverUrl, displayName});
-        }
         this.terminatingSessionUrl.delete(serverUrl);
     };
 

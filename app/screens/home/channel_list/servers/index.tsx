@@ -161,7 +161,9 @@ const Servers = React.forwardRef<ServersRef>((_, ref) => {
         <ServerIcon
             hasUnreads={total.unread}
             mentionCount={total.mentions}
-            onPress={onPress}
+
+            // Disable press event, so that you can't change servers.
+            // onPress={onPress}
             style={styles.icon}
             testID={'channel_list.servers.server_icon'}
             badgeBorderColor={theme.sidebarBg}

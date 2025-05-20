@@ -224,9 +224,9 @@ const Server = ({
     };
 
     const handleConnect = async (manualUrl?: string) => {
-        if (buttonDisabled && !manualUrl) {
-            return;
-        }
+        // if (buttonDisabled && !manualUrl) {
+        //     return;
+        // }
 
         if (connecting && cancelPing) {
             cancelPing();

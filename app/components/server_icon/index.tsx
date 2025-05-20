@@ -2,13 +2,10 @@
 // See LICENSE.txt for license information.
 
 import React, {useMemo} from 'react';
-import {type StyleProp, StyleSheet, type TextStyle, View, type ViewStyle} from 'react-native';
+import {Image, type StyleProp, StyleSheet, type TextStyle, View, type ViewStyle} from 'react-native';
 
 import Badge from '@components/badge';
-import CompassIcon from '@components/compass_icon';
-import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {useTheme} from '@context/theme';
-import {changeOpacity} from '@utils/theme';
 
 type Props = {
     badgeBackgroundColor?: string;
@@ -16,7 +13,6 @@ type Props = {
     badgeColor?: string;
     badgeStyle?: StyleProp<TextStyle>;
     hasUnreads: boolean;
-    iconColor?: string;
     mentionCount: number;
     onPress?: () => void;
     size?: number;
@@ -24,8 +20,6 @@ type Props = {
     testID?: string;
     unreadStyle?: StyleProp<TextStyle>;
 }
-
-const hitSlop = {top: 20, bottom: 5, left: 40, right: 20};
 
 const styles = StyleSheet.create({
     badge: {
@@ -36,6 +30,10 @@ const styles = StyleSheet.create({
         left: 18,
         top: -5,
     },
+    appIcon: {
+        borderRadius: 6,
+        overflow: 'hidden',
+    },
 });
 
 export default function ServerIcon({
@@ -44,10 +42,8 @@ export default function ServerIcon({
     badgeColor,
     badgeStyle,
     hasUnreads,
-    iconColor,
     mentionCount,
-    onPress,
-    size = 24,
+    size = 32,
     style,
     testID,
     unreadStyle,
@@ -61,28 +57,20 @@ export default function ServerIcon({
 
     return (
         <View style={style}>
-            <TouchableWithFeedback
-                disabled={onPress === undefined}
-                onPress={onPress}
-                type='opacity'
-                testID={testID}
-                hitSlop={hitSlop}
-            >
-                <CompassIcon
-                    size={size}
-                    name='server-variant'
-                    color={iconColor || changeOpacity(theme.sidebarHeaderTextColor, 0.56)}
-                />
-                <Badge
-                    borderColor={badgeBorderColor || theme.sidebarTeamBarBg}
-                    backgroundColor={badgeBackgroundColor}
-                    color={badgeColor}
-                    visible={hasBadge}
-                    style={memoizedStyle}
-                    testID={`${testID}.badge`}
-                    value={count}
-                />
-            </TouchableWithFeedback>
+            <Image
+                source={require('@assets/images/logo.png')}
+                style={[styles.appIcon, {width: size, height: size}]}
+            />
+
+            <Badge
+                borderColor={badgeBorderColor || theme.sidebarTeamBarBg}
+                backgroundColor={badgeBackgroundColor}
+                color={badgeColor}
+                visible={hasBadge}
+                style={memoizedStyle}
+                testID={`${testID}.badge`}
+                value={count}
+            />
         </View>
     );
 }

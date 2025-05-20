@@ -376,7 +376,6 @@ const ServerItem = ({
                                 badgeBorderColor={theme.centerChannelBg}
                                 badgeColor={theme.buttonColor}
                                 badgeStyle={styles.badge}
-                                iconColor={changeOpacity(theme.centerChannelColor, 0.56)}
                                 hasUnreads={badge.isUnread}
                                 mentionCount={badge.mentions}
                                 size={36}

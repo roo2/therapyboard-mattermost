@@ -70,7 +70,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
 
 const ServerForm = ({
     autoFocus = false,
-    buttonDisabled,
     connecting,
     displayName = '',
     displayNameError,
@@ -99,7 +98,8 @@ const ServerForm = ({
         displayNameRef.current?.focus();
     }, []);
 
-    const buttonType = buttonDisabled ? 'disabled' : 'default';
+    // const buttonType = buttonDisabled ? 'disabled' : 'default';
+    const buttonType = 'default';
     const styleButtonText = buttonTextStyle(theme, 'lg', 'primary', buttonType);
     const styleButtonBackground = buttonBackgroundStyle(theme, 'lg', 'primary', buttonType);
 
@@ -118,7 +118,8 @@ const ServerForm = ({
         );
     }
 
-    const connectButtonTestId = buttonDisabled ? 'server_form.connect.button.disabled' : 'server_form.connect.button';
+    // const connectButtonTestId = buttonDisabled ? 'server_form.connect.button.disabled' : 'server_form.connect.button';
+    const connectButtonTestId = 'server_form.connect.button';
 
     return (
         <View style={styles.formContainer}>
@@ -177,7 +178,8 @@ const ServerForm = ({
             }
             <Button
                 containerStyle={styles.connectButton}
-                disabled={buttonDisabled}
+
+                // disabled={buttonDisabled}
                 onPress={onConnect}
                 testID={connectButtonTestId}
                 buttonStyle={styleButtonBackground}
